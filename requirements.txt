@@ -1,0 +1,4 @@
+# install this with pip install -r requirements.txt
+
+requests==2.11.1
+xlrd==1.0.0
