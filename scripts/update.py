@@ -2,6 +2,8 @@
 
 import csv
 
+from os.path import dirname, join
+
 import requests
 import xlrd
 
@@ -27,5 +29,8 @@ def parse(url, filename, monthly=False):
             writer.writerow([date.isoformat(), row[1].value])
 
 
-parse('http://www.eia.gov/dnav/ng/hist_xls/RNGWHHDd.xls', '../data/gas_price_daily.csv')
-#parse('http://www.eia.gov/dnav/ng/hist_xls/RNGWHHDm.xls', '../data/gas_price_monthly.csv', monthly=True)
+def rpath(*args):
+    return join(dirname(__file__), *args)
+
+parse('http://www.eia.gov/dnav/ng/hist_xls/RNGWHHDd.xls', rpath('../data/gas_price_daily.csv'))
+parse('http://www.eia.gov/dnav/ng/hist_xls/RNGWHHDm.xls', rpath('../data/gas_price_monthly.csv'), monthly=True)
