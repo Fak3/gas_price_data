@@ -1,0 +1,51 @@
+{
+  "title": "Henry Hub Natural Gas Spot Price",
+  "resources": [
+    {
+      "schema": {
+        "fields": [
+          {
+            "title": "",
+            "type": "date",
+            "description": "",
+            "format": "default",
+            "name": "Date"
+          },
+          {
+            "title": "",
+            "type": "number",
+            "description": "",
+            "format": "default",
+            "name": "Price"
+          }
+        ]
+      },
+      "path": "./data/gas_price_monthly.csv",
+      "name": "gas_price_monthly"
+    },
+    {
+      "schema": {
+        "fields": [
+          {
+            "title": "",
+            "type": "date",
+            "description": "",
+            "format": "default",
+            "name": "Date"
+          },
+          {
+            "title": "",
+            "type": "number",
+            "description": "",
+            "format": "default",
+            "name": "Price"
+          }
+        ]
+      },
+      "path": "./data/gas_price_daily.csv",
+      "name": "gas_price_daily"
+    }
+  ],
+  "name": "gas-prices"
+}
+
