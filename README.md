@@ -6,3 +6,7 @@ Daily and monthly.
 
 http://www.eia.gov/dnav/ng/hist/rngwhhdD.htm
 
+
+## Live data chart
+
+https://fak3.github.io/gas_price_data/index.html
