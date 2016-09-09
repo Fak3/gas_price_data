@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+    <head>
+        <title>Henry Hub Natural Gas Spot Price</title>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="https://d3js.org/d3.v3.min.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css"/>
+
+        <style>
+            .grid-dotted {
+                stroke: #777;
+                stroke-dasharray: 2,2;
+            }
+        </style>
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                d3.csv("./data/gas_price_monthly.csv", function(csvdata) {
+                    csvdata.forEach(function(d) {
+                        d.Date = d3.time.format("%Y-%m-%d").parse(d.Date);
+                        d.Price = +d.Price;
+                    });
+
+                    var chart = c3.generate({
+                        bindto: '#chart',
+                        data: {
+                            json: csvdata,
+                            x: 'Date',
+                            xFormat: '%Y-%m-%d',
+                            keys: {value: ['Date','Price']}
+                        },
+                        axis: {
+                            y: {
+                                label: {
+                                    text: 'Price',
+                                    position: 'outer-middle'
+                                }
+                            },
+                            x: {
+                                type: 'timeseries',
+                                label: {
+                                    text: 'Date',
+                                    position: 'outer-middle'
+                                },
+                                tick: {
+                                    format: function (x) {
+                                        return x.getFullYear();
+                                    }
+                                }
+                            }
+                        },
+                        tooltip: {
+                            format: {
+                                title: function (x) { return d3.time.format("%Y %b")(x); }
+                            }
+                        },
+                        grid: {
+                            x: {
+                                lines: function() {
+                                    // Create grid line for each year.
+                                    var min_date = d3.min(csvdata, function (d) { return d.Date });
+                                    var max_date = d3.max(csvdata, function (d) { return d.Date });
+                                    var dateArray = d3.time.scale().domain([min_date, max_date]).ticks(d3.time.years, 1);
+                                    var lines = [];
+
+                                    for (i=0; i<dateArray.length; i++){
+                                        lines.push({value: dateArray[i], class: 'grid-dotted'})
+                                    }
+                                    return lines;
+                                }
+                            },
+                            y: { show:true }
+
+                        },
+                        legend: { show: false }
+                    });
+                })
+            });
+        </script>
+    </head>
+
+    <body>
+        <div id="chart"></div>
+        <div>
+            <h1>Henry Hub Natural Gas Spot Price (Dollars per Million Btu)</h1>
+        </div>
+    </body>
+</html>
+
